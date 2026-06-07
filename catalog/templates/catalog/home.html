@@ -1,0 +1,258 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ART DECOR</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <div class="container header-container">
+
+        <div class="logo">
+
+            <h1>ART DECOR</h1>
+            <span>МАСТЕР-ХУДОЖНИК</span>
+
+        </div>
+
+        <nav class="nav">
+
+            <a href="#">Главная</a>
+            <a href="#products">Каталог</a>
+            <a href="#reviews">Отзывы</a>
+            <a href="#footer">Контакты</a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <img class="hero-bg"
+     src="https://i.supaimg.com/180225d2-1f49-4aa9-85c8-3c9799790bf8/1e1bcc9f-40f8-4a9b-adb6-998520d1f1b9.jpg"
+     alt="Decor">
+    <div class="hero-overlay"></div>
+
+    <div class="container hero-container">
+
+        <div class="hero-text">
+
+            <span class="hero-subtitle">МАСТЕР-ХУДОЖНИК</span>
+
+            <h2>Декор<br>для стен</h2>
+
+            <p>
+                Качество на высшем уровне<br>
+                Воплотим интерьер вашей мечты
+            </p>
+
+            <a class="btn" href="https://wa.me/996706010902" target="_blank">
+                WhatsApp консультация
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ADVANTAGES -->
+
+<section class="advantages">
+
+    <div class="container advantages-grid">
+
+        <div class="adv-card">
+            <h3>Премиум качество</h3>
+            <p>Используем лучшие материалы</p>
+        </div>
+
+        <div class="adv-card">
+            <h3>Индивидуальный подход</h3>
+            <p>Работа под ваш интерьер</p>
+        </div>
+
+        <div class="adv-card">
+            <h3>Современный стиль</h3>
+            <p>Минимализм и премиум дизайн</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PRODUCTS -->
+
+<section class="products" id="products">
+
+    <div class="container">
+
+        <h2 class="section-title">Каталог изделий</h2>
+
+        {% for category in categories %}
+
+            {% if category.products.all %}
+
+                <h3 class="category-title">{{ category.title }}</h3>
+
+                <div class="grid">
+
+                    {% for product in category.products.all %}
+
+                        {% if product.is_published %}
+
+                        <div class="card">
+
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.title }}">
+                            {% endif %}
+
+                            <div class="card-body">
+
+                                <h3>{{ product.title }}</h3>
+                                <p>{{ product.short_desc }}</p>
+
+                                <div class="card-bottom">
+
+                                    <span class="price">
+                                        {{ product.price }} сом
+                                    </span>
+
+                                    <a class="btn-small"
+                                       href="https://wa.me/996706010902?text=Хочу%20заказать%20{{ product.title }}">
+                                        Заказать
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- REVIEWS -->
+
+<section class="reviews" id="reviews">
+
+    <div class="container">
+
+        <h2 class="section-title">Отзывы клиентов</h2>
+
+        <div class="reviews-grid">
+
+            {% for category in categories %}
+
+                {% for product in category.products.all %}
+
+                    {% for review in product.reviews.all %}
+
+                        <div class="review-card">
+
+                            <h3>{{ review.name }}</h3>
+                            <span>⭐ {{ review.rating }}/10</span>
+                            <p>{{ review.text }}</p>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% endfor %}
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CTA -->
+
+<section class="cta">
+
+    <div class="container">
+
+        <div class="cta-box">
+
+            <h2>Хотите индивидуальный дизайн?</h2>
+
+            <p>Создадим уникальный проект под ваш интерьер</p>
+
+            <a class="btn" href="https://wa.me/996706010902">
+                Бесплатная консультация
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer class="footer" id="footer">
+
+    <div class="container footer-container">
+
+        <div>
+
+            <h2>ART DECOR</h2>
+            <p>Декор • Интерьер • Дизайн</p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <a href="https://wa.me/996706010902">WhatsApp</a>
+
+            <a href="https://www.instagram.com/house.decor.kg?igsh=bzdrMzB5OWxqa3B4">
+                Instagram
+            </a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>

@@ -1,28 +1,29 @@
 from django.urls import path
-from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
-from .models import Product, Category, Order
-from .serializers import ProductSerializer, CategorySerializer, OrderSerializer
-
-class ProductListAPI(ListAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-
-class ProductDetailAPI(RetrieveAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-    lookup_field = 'slug'
-
-class CategoryListAPI(ListAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-
-class OrderCreateAPI(CreateAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
+from .views import (
+    home,
+    category_products,
+    ProductListAPIView,
+    ProductDetailAPIView,
+    ReviewCreateAPIView,
+    CategoryListAPIView,
+    OrderCreateAPIView,
+)
 
 urlpatterns = [
-    path('', ProductListAPI.as_view(), name='api_products'),
-    path('', ProductDetailAPI.as_view(), name='api_product_detail'),
-    path('', CategoryListAPI.as_view(), name='api_categories'),
-    path('', OrderCreateAPI.as_view(), name='api_create_order'),
+
+    # сайт
+    path('', home, name='home'),
+
+    path(
+        'category/<slug:slug>/',
+        category_products,
+        name='category'
+    ),
+
+    # API
+    path('api/products/', ProductListAPIView.as_view()),
+    path('api/products/<slug:slug>/', ProductDetailAPIView.as_view()),
+    path('api/categories/', CategoryListAPIView.as_view()),
+    path('api/reviews/', ReviewCreateAPIView.as_view()),
+    path('api/orders/', OrderCreateAPIView.as_view()),
 ]

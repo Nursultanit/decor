@@ -1,27 +1,76 @@
-# catalog/views.py
+from rest_framework import generics
 from django.shortcuts import render, get_object_or_404
-from .models import Product, Category
-from .forms import OrderForm
 
-def product_list(request):
-    products = Product.objects.all()
-    return render(request, 'catalog/product_list.html', {'products': products})
+from .models import Product, Category, Review, Order
+
+from .serializers import (
+    ProductSerializer,
+    CategorySerializer,
+    ReviewSerializer,
+    OrderSerializer
+)
 
 
-def product_detail(request, slug):
-    product = get_object_or_404(Product, slug=slug)
+# 🏠 главная страница
+def home(request):
 
-    if request.method == 'POST':
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.product = product
-            order.save()
-            return render(request, 'catalog/order_success.html', {'product': product})
-    else:
-        form = OrderForm()
+    products = Product.objects.filter(is_published=True)
+    categories = Category.objects.all()
 
-    return render(request, 'catalog/product_detail.html', {
-        'product': product,
-        'form': form
+    return render(request, 'catalog/home.html', {
+        'products': products,
+        'categories': categories
     })
+
+
+# 📂 товары по категории
+def category_products(request, slug):
+
+    category = get_object_or_404(
+        Category,
+        slug=slug
+    )
+
+    products = Product.objects.filter(
+        category=category,
+        is_published=True
+    )
+
+    categories = Category.objects.all()
+
+    return render(request, 'catalog/category.html', {
+        'category': category,
+        'products': products,
+        'categories': categories
+    })
+
+
+# 📦 список товаров
+class ProductListAPIView(generics.ListAPIView):
+    queryset = Product.objects.filter(is_published=True)
+    serializer_class = ProductSerializer
+
+
+# 🧾 страница товара
+class ProductDetailAPIView(generics.RetrieveAPIView):
+    queryset = Product.objects.filter(is_published=True)
+    serializer_class = ProductSerializer
+    lookup_field = 'slug'
+
+
+# 📂 категории
+class CategoryListAPIView(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+# ⭐ отзывы
+class ReviewCreateAPIView(generics.CreateAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+
+# 📦 заказ
+class OrderCreateAPIView(generics.CreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
