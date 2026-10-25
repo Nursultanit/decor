@@ -3,26 +3,200 @@
 
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ART DECOR</title>
+    <meta name="theme-color" content="#171613">
+    <meta name="description" content="ART DECOR — декоративная штукатурка, премиальный декор стен и нанесение под ваш интерьер.">
+    <title>ART DECOR — декоративная штукатурка</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
 
+    <style>
+        /* ПРЕМИАЛЬНЫЕ ПРЕИМУЩЕСТВА */
+        .advantages {
+            padding: 70px 0;
+            background: #191918;
+        }
+
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .adv-card {
+            padding: 32px 24px;
+            text-align: center;
+            background: linear-gradient(145deg, #22221f, #191918);
+            border: 1px solid #39362f;
+            border-radius: 10px;
+            transition: .3s ease;
+        }
+
+        .adv-card:hover {
+            transform: translateY(-5px);
+            border-color: #d1c1a3;
+            box-shadow: 0 12px 30px rgba(0,0,0,.22);
+        }
+
+        .adv-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 22px;
+            color: #d1c1a3;
+            background: #191918;
+            border: 1px solid #5a503f;
+            border-radius: 50%;
+        }
+
+        .adv-icon svg {
+            width: 34px;
+            height: 34px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .adv-card h3 {
+            margin: 0 0 12px;
+            color: #d1c1a3;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .adv-card p {
+            margin: 0;
+            color: #c1bdb5;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* ПРЕМИАЛЬНЫЙ ЗАГОЛОВОК КАТАЛОГА */
+        .products .premium-heading {
+            max-width: none;
+            margin: 0 auto 45px;
+            padding: 15px 20px 35px;
+            text-align: center;
+        }
+
+        .products .catalog-emblem {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 66px;
+            height: 66px;
+            margin: 0 auto 22px;
+            border: 1px solid rgba(209,193,163,.5);
+            border-radius: 50%;
+            background: linear-gradient(145deg,#22211e,#121211);
+            box-shadow: 0 0 30px rgba(209,193,163,.04);
+        }
+
+        .products .catalog-emblem svg {
+            width: 31px;
+            height: 31px;
+            fill: none;
+            stroke: #d1c1a3;
+            stroke-width: 1.25;
+            stroke-linejoin: miter;
+        }
+
+        .products .premium-heading .eyebrow {
+            display: block;
+            margin-bottom: 13px;
+            color: #d1c1a3;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 5px;
+        }
+
+        .products .premium-heading .section-title {
+            margin: 0;
+            color: #f2eee6;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(30px, 4vw, 46px);
+            font-weight: 400;
+            letter-spacing: -.7px;
+            line-height: 1.25;
+        }
+
+        .products .premium-heading .section-title span {
+            color: #d1c1a3;
+            font-style: italic;
+        }
+
+        .products .premium-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .products .premium-divider::before,
+        .products .premium-divider::after {
+            content: "";
+            width: 35px;
+            height: 1px;
+            background: rgba(209,193,163,.45);
+        }
+
+        .products .premium-divider span {
+            width: 7px;
+            height: 7px;
+            margin: 0 10px;
+            border: 1px solid #d1c1a3;
+            transform: rotate(45deg);
+        }
+
+        @media (max-width: 768px) {
+            .advantages-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .adv-card {
+                padding: 28px 20px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .products .premium-heading {
+                padding: 10px 10px 25px;
+                margin-bottom: 30px;
+            }
+
+            .products .catalog-emblem {
+                width: 56px;
+                height: 56px;
+                margin-bottom: 18px;
+            }
+
+            .products .premium-heading .eyebrow {
+                letter-spacing: 4px;
+            }
+
+            .products .premium-heading .section-title {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
 <body>
 
-<!-- HEADER -->
-<header class="header">
+<header class="header" id="home">
     <div class="container header-container">
-        <div class="logo">
-            <h1>ART DECOR</h1>
+        <a class="logo" href="#home">
+            <h1>House Decor</h1>
             <span>МАСТЕР-ХУДОЖНИК</span>
-        </div>
+        </a>
 
         <nav class="nav">
-            <a href="#">Главная</a>
+            <a href="#home">Главная</a>
             <a href="#products">Каталог</a>
             <a href="#reviews">Отзывы</a>
             <a href="#footer">Контакты</a>
@@ -30,194 +204,269 @@
     </div>
 </header>
 
-<!-- HERO -->
 <section class="hero">
-
     <img
         class="hero-bg"
         src="https://i.supaimg.com/180225d2-1f49-4aa9-85c8-3c9799790bf8/ab0aa537-941e-47d8-946e-a30cc35dd17c.jpg"
-        alt="Декоративная стена и современный интерьер"
+        alt="Современный интерьер с декоративной отделкой стен"
+        fetchpriority="high"
     >
 
     <div class="hero-overlay"></div>
 
     <div class="container hero-container">
         <div class="hero-text">
-
-            <span class="hero-subtitle">МАСТЕР-ХУДОЖНИК</span>
-
-            <h2>Декор<br>для стен</h2>
-
+            <span class="hero-subtitle">ИСКУССТВО В ДЕТАЛЯХ</span>
+            <h2>Декор,<br>который впечатляет</h2>
             <p>
-                Качество на высшем уровне<br>
-                Воплотим интерьер вашей мечты
+                Премиальная отделка стен.<br>
+                Индивидуальный стиль вашего интерьера.
             </p>
 
-            <a
-                class="btn"
-                href="https://wa.me/996706010902"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                WhatsApp консультация
-            </a>
-
+            <div class="hero-actions">
+                <a class="btn" href="#products">Смотреть каталог</a>
+                <a class="btn btn-outline"
+                   href="https://wa.me/996706010902"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Обсудить проект
+                </a>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- ADVANTAGES -->
+<!-- ПРЕИМУЩЕСТВА -->
 <section class="advantages">
     <div class="container advantages-grid">
 
-        <div class="adv-card">
+        <article class="adv-card">
+            <div class="adv-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 2.5 21 12 12 21.5 3 12 12 2.5Z"/>
+                    <path d="m12 6 5.5 6-5.5 6-5.5-6L12 6Z"/>
+                </svg>
+            </div>
             <h3>Премиум качество</h3>
-            <p>Используем лучшие материалы</p>
-        </div>
+            <p>Внимание к материалам и каждой детали.</p>
+        </article>
 
-        <div class="adv-card">
+        <article class="adv-card">
+            <div class="adv-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m12 3 2.4 5.2L20 10.5l-5.6 2.3L12 18l-2.4-5.2L4 10.5l5.6-2.3L12 3Z"/>
+                    <path d="m19 15 .9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15Z"/>
+                    <path d="m5 2 .8 1.7L7.5 4.5l-1.7.8L5 7l-.8-1.7-1.7-.8 1.7-.8L5 2Z"/>
+                </svg>
+            </div>
             <h3>Индивидуальный подход</h3>
-            <p>Работа под ваш интерьер</p>
-        </div>
+            <p>Подбираем фактуру и оттенок под ваш интерьер.</p>
+        </article>
 
-        <div class="adv-card">
-            <h3>Современный стиль</h3>
-            <p>Минимализм и премиум дизайн</p>
-        </div>
+        <article class="adv-card">
+            <div class="adv-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m14.5 5.5 4 4"/>
+                    <path d="m4 20 4.5-1 11-11a2.8 2.8 0 0 0-4-4l-11 11L4 20Z"/>
+                    <path d="M3 4 4 6 6 7 4 8 3 10 2 8 0 7 2 6 3 4Z"/>
+                </svg>
+            </div>
+            <h3>Мастерское нанесение</h3>
+            <p>Аккуратная работа и выразительный результат.</p>
+        </article>
 
     </div>
 </section>
 
-<!-- PRODUCTS -->
+<!-- КАТАЛОГ -->
 <section class="products" id="products">
     <div class="container">
 
-        <h2 class="section-title">Каталог изделий</h2>
+        <div class="section-heading premium-heading">
+            <div class="catalog-emblem" aria-hidden="true">
+                <svg viewBox="0 0 48 48">
+                    <path d="M24 4 44 24 24 44 4 24Z"/>
+                    <path d="M24 13 35 24 24 35 13 24Z"/>
+                </svg>
+            </div>
+
+            <span class="eyebrow">House Decor</span>
+
+            <h2 class="section-title">
+                Материалы <span>и фактуры</span>
+            </h2>
+
+            <div class="premium-divider" aria-hidden="true">
+                <span></span>
+            </div>
+        </div>
 
         {% for category in categories %}
-            {% if category.products.all %}
+            {% with products=category.products.all %}
+                {% if products %}
+                    <h3 class="category-title">{{ category.title }}</h3>
 
-                <h3 class="category-title">{{ category.title }}</h3>
+                    <div class="grid">
+                        {% for product in products %}
+                            {% if product.is_published %}
+                                <article class="card">
+                                    <div class="product-image-wrap">
+                                        {% if product.image %}
+                                            <img
+                                                class="product-image"
+                                                src="{{ product.image.url }}"
+                                                alt="{{ product.title }}"
+                                                loading="lazy"
+                                            >
+                                        {% else %}
+                                            <div class="product-no-image">
+                                                Фото скоро появится
+                                            </div>
+                                        {% endif %}
 
-                <div class="grid">
-                    {% for product in category.products.all %}
-                        {% if product.is_published %}
-
-                            <div class="card">
-
-                                {% if product.image %}
-                                    <img
-                                        src="{{ product.image.url }}"
-                                        alt="{{ product.title }}"
-                                    >
-                                {% endif %}
-
-                                <div class="card-body">
-                                    <h3>{{ product.title }}</h3>
-                                    <p>{{ product.short_desc }}</p>
-
-                                    <div class="card-bottom">
-                                        <span class="price">
-                                            {{ product.price }} сом
-                                        </span>
-
-                                        <a
-                                            class="btn-small"
-                                            href="https://wa.me/996706010902?text=Хочу%20заказать%20{{ product.title|urlencode }}"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
-                                            Заказать
-                                        </a>
+                                        <span class="product-badge">ART DECOR</span>
                                     </div>
-                                </div>
-                            </div>
 
-                        {% endif %}
-                    {% endfor %}
-                </div>
+                                    <div class="card-body">
+                                        <h3>{{ product.title }}</h3>
 
-            {% endif %}
+                                        <p class="product-description">
+                                            {% if product.short_desc %}
+                                                {{ product.short_desc|truncatechars:180 }}
+                                            {% elif product.description %}
+                                                {{ product.description|truncatechars:180 }}
+                                            {% else %}
+                                                Декоративное покрытие для вашего интерьера.
+                                            {% endif %}
+                                        </p>
+
+                                        <div class="card-bottom">
+                                            <div class="price-block">
+                                                <span class="price">
+                                                    {% if product.price != None %}
+                                                        {{ product.price }} сом
+                                                    {% else %}
+                                                        Цена по запросу
+                                                    {% endif %}
+                                                </span>
+
+                                                {% if product.price != None %}
+                                                    <span class="price-unit">за м²</span>
+                                                {% endif %}
+                                            </div>
+
+                                            <a
+                                                class="btn-small"
+                                                href="{% url 'create_order' %}?product={{ product.id }}"
+                                            >
+                                                Заказать <span aria-hidden="true">↗</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </article>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+        {% empty %}
+            <p class="empty-products">
+                Каталог скоро пополнится новыми материалами.
+            </p>
         {% endfor %}
-
     </div>
 </section>
 
-<!-- REVIEWS -->
+<!-- ОТЗЫВЫ -->
 <section class="reviews" id="reviews">
     <div class="container">
-
-        <h2 class="section-title">Отзывы клиентов</h2>
+        <div class="section-heading">
+            <span class="eyebrow">МНЕНИЕ КЛИЕНТОВ</span>
+            <h2 class="section-title">Отзывы о нашей работе</h2>
+        </div>
 
         <div class="reviews-grid">
             {% for category in categories %}
                 {% for product in category.products.all %}
-                    {% for review in product.reviews.all %}
+                    {% if product.is_published %}
+                        {% for review in product.reviews.all %}
+                            <article class="review-card">
+                                <div class="review-stars"
+                                     aria-label="Оценка {{ review.rating }} из 10">
+                                    ★ {{ review.rating }}/10
+                                </div>
 
-                        <div class="review-card">
-                            <h3>{{ review.name }}</h3>
-                            <span>⭐ {{ review.rating }}/10</span>
-                            <p>{{ review.text }}</p>
-                        </div>
-
-                    {% endfor %}
+                                <h3>{{ review.name }}</h3>
+                                <p>{{ review.text }}</p>
+                                <span class="review-product">{{ product.title }}</span>
+                            </article>
+                        {% endfor %}
+                    {% endif %}
                 {% endfor %}
             {% endfor %}
         </div>
-
     </div>
 </section>
 
-<!-- CTA -->
+<!-- ПРИЗЫВ К ДЕЙСТВИЮ -->
 <section class="cta">
     <div class="container">
-
         <div class="cta-box">
-            <h2>Хотите индивидуальный дизайн?</h2>
-            <p>Создадим уникальный проект под ваш интерьер</p>
+            <span class="eyebrow">ВАШ ИНТЕРЬЕР — НАША РАБОТА</span>
+            <h2>Создадим стены<br>с характером</h2>
+            <p>Расскажите об идее — поможем подобрать материал и отделку.</p>
 
-            <a
-                class="btn"
-                href="https://wa.me/996706010902"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Бесплатная консультация
+            <a class="btn"
+               href="https://wa.me/996706010902"
+               target="_blank"
+               rel="noopener noreferrer">
+                Обсудить ваш проект
             </a>
         </div>
-
     </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ПОДВАЛ -->
 <footer class="footer" id="footer">
-    <div class="container footer-container">
-
-        <div>
-            <h2>ART DECOR</h2>
-            <p>Декор • Интерьер • Дизайн</p>
+    <div class="container footer-inner">
+        <div class="footer-brand">
+            <a class="logo footer-logo" href="#home">
+                <h2>ART DECOR</h2>
+                <span>МАСТЕР-ХУДОЖНИК</span>
+            </a>
+            <span class="footer-tagline">Декор · Интерьер · Дизайн</span>
         </div>
 
         <div class="footer-links">
-            <a
-                href="https://wa.me/996706010902"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
+            <a href="https://wa.me/996706010902"
+               target="_blank" rel="noopener noreferrer">
                 WhatsApp
             </a>
 
-            <a
-                href="https://www.instagram.com/house.decor.kg?igsh=bzdrMzB5OWxqa3B4"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
+            <a href="https://www.instagram.com/house.decor.kg/"
+               target="_blank" rel="noopener noreferrer">
                 Instagram
             </a>
         </div>
 
+        <div class="developer-credit">
+            <span>Разработка сайта</span>
+            <a href="https://www.instagram.com/nursultan_0211/"
+               target="_blank" rel="noopener noreferrer">
+                @nursultan_0211
+            </a>
+        </div>
+
+        <p class="copyright">
+            © {% now "Y" %} ART DECOR. Все права защищены.
+        </p>
     </div>
 </footer>
 
 </body>
 </html>
+
+
+
+
+
