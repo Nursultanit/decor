@@ -1,4 +1,3 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="ru">
@@ -6,12 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#191918">
-    <meta name="description" content="Оформление заказа ART DECOR">
-    <title>Заказ — ART DECOR</title>
+    <meta name="description" content="Оформление заказа House Decor">
+    <title>Заказ — House Decor</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <style>
+        .order-main {
+            padding: 60px 0;
+            background: var(--bg, #111110);
+            min-height: calc(100vh - 200px);
+        }
+
         .order-box {
             max-width: 720px;
             margin: 0 auto;
@@ -23,10 +28,36 @@
             color: #fff;
         }
 
+        .order-product-image {
+            display: block;
+            width: 100%;
+            max-height: 380px;
+            object-fit: cover;
+            object-position: center;
+            margin-bottom: 24px;
+            border-radius: 6px;
+        }
+
+        .order-box > h2 {
+            margin: 0 0 14px;
+            color: #d1c1a3;
+            font-family: Georgia, serif;
+            font-size: 26px;
+        }
+
+        .order-description {
+            margin: 0 0 24px;
+            line-height: 1.7;
+            color: #d0ccc4;
+            font-size: 14px;
+        }
+
         .order-box label {
             display: block;
-            margin: 18px 0 8px;
+            margin: 20px 0 8px;
             color: #eee;
+            font-size: 14px;
+            font-weight: 500;
         }
 
         .order-box input,
@@ -44,23 +75,68 @@
 
         .order-box input:focus,
         .order-box textarea:focus {
-            outline: 1px solid #d1c1a3;
+            outline: none;
             border-color: #d1c1a3;
         }
 
-        .order-box .btn {
-            display: inline-block;
-            margin-top: 24px;
-            padding: 14px 22px;
-            cursor: pointer;
-            font: inherit;
-            border: none;
+        .order-box textarea {
+            min-height: 120px;
+            resize: vertical;
         }
 
-        .order-price {
-            margin: 18px 0;
-            color: #d1c1a3;
-            line-height: 1.8;
+        .order-box input::placeholder,
+        .order-box textarea::placeholder {
+            color: #928d83;
+        }
+
+        .order-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .order-box .btn,
+        .whatsapp-btn {
+            display: block;
+            width: 100%;
+            margin: 0;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 4px;
+            box-sizing: border-box;
+            text-align: center;
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.25s ease;
+        }
+
+        .order-box .btn {
+            background: #d1c1a3;
+            color: #191918;
+        }
+
+        .order-box .btn:hover {
+            background: #e0d2b8;
+        }
+
+        .whatsapp-btn {
+            background: #217a46;
+            color: #fff;
+        }
+
+        .whatsapp-btn:hover {
+            background: #195f36;
+        }
+
+        .order-note {
+            margin-top: 16px;
+            color: #aaa397;
+            font-size: 13px;
+            line-height: 1.6;
+            text-align: center;
         }
 
         .order-message {
@@ -71,34 +147,7 @@
             border: 1px solid #555044;
             color: #fff;
             overflow-wrap: anywhere;
-        }
-
-        .order-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .whatsapp-btn {
-            display: inline-block;
-            margin-top: 24px;
-            padding: 14px 22px;
-            color: #fff;
-            background: #217a46;
-            text-decoration: none;
             border-radius: 4px;
-        }
-
-        .whatsapp-btn:hover {
-            background: #195f36;
-        }
-
-        .phone-hint {
-            display: block;
-            margin-top: 6px;
-            color: #bcb6a8;
-            font-size: 13px;
         }
 
         @media (max-width: 600px) {
@@ -106,16 +155,8 @@
                 padding: 20px;
             }
 
-            .order-actions {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .order-actions .btn,
-            .order-actions .whatsapp-btn {
-                width: 100%;
-                text-align: center;
-                box-sizing: border-box;
+            .order-product-image {
+                max-height: 260px;
             }
         }
     </style>
@@ -126,24 +167,20 @@
 <header class="header">
     <div class="container header-container">
         <a class="logo" href="/">
-            <h1>ART DECOR</h1>
+            <h1>House Decor</h1>
             <span>МАСТЕР-ХУДОЖНИК</span>
         </a>
 
         <nav class="nav">
             <a href="/">Главная</a>
             <a href="/#products">Каталог</a>
-            <a href="https://wa.me/996706010902"
-               target="_blank"
-               rel="noopener noreferrer">WhatsApp</a>
+            <a href="https://wa.me/996706010902" target="_blank" rel="noopener noreferrer">WhatsApp</a>
         </nav>
     </div>
 </header>
 
-<main class="products">
+<main class="order-main">
     <div class="container">
-
-        <h2 class="section-title">Оформление заказа</h2>
 
         {% if messages %}
             {% for message in messages %}
@@ -160,112 +197,35 @@
                     <img
                         src="{{ product.image.url }}"
                         alt="{{ product.title }}"
-                        style="width:100%;max-height:350px;object-fit:cover;margin-bottom:24px;"
+                        class="order-product-image"
                     >
                 {% endif %}
 
                 <h2>{{ product.title }}</h2>
 
-                <p style="margin-top:12px;">
+                <div class="order-description">
                     {% if product.description %}
                         {{ product.description }}
                     {% elif product.short_desc %}
                         {{ product.short_desc }}
                     {% else %}
-                        Декоративное покрытие ART DECOR.
+                        Декоративное покрытие House Decor.
                     {% endif %}
-                </p>
-
-                <div class="order-price">
-                    <div>
-                        Материал:
-                        {% if product.price != None %}
-                            {{ product.price }} сом/м²
-                        {% else %}
-                            цена не указана
-                        {% endif %}
-                    </div>
-
-                    <div>
-                        Нанесение: {{ product.application_price }} сом/м²
-                    </div>
-
-                    <div>
-                        <strong>Услуга: Материал + нанесение</strong>
-                    </div>
                 </div>
 
-                <form
-                    method="post"
-                    action="{% url 'create_order' %}?product={{ product.id }}"
-                >
+                <form id="orderForm">
                     {% csrf_token %}
 
-                    <input
-                        type="hidden"
-                        name="product"
-                        value="{{ product.id }}"
-                    >
+                    <label for="comment">
+                        Подробный комментарий
+                    </label>
 
-                    <label for="name">Ваше имя *</label>
-                    <input
-                        id="name"
-                        name="name"
-                        type="text"
-                        autocomplete="name"
-                        required
-                        value="{{ request.POST.name|default:'' }}"
-                        placeholder="Введите ваше имя"
-                    >
-
-                    <label for="phone">Телефон *</label>
-                    <input
-                        id="phone"
-                        name="phone"
-                        type="tel"
-                        autocomplete="tel"
-                        inputmode="tel"
-                        pattern="[0-9+() -]{9,20}"
-                        minlength="9"
-                        maxlength="20"
-                        required
-                        value="{{ request.POST.phone|default:'' }}"
-                        placeholder="+996 700 123 456"
-                        title="Введите номер телефона без букв"
-                    >
-                    <span class="phone-hint">
-                        Используй цифры и символы + ( ) -
-                    </span>
-
-                    <label for="address">Адрес объекта</label>
-                    <input
-                        id="address"
-                        name="address"
-                        type="text"
-                        autocomplete="street-address"
-                        placeholder="Город, улица, дом"
-                        value="{{ request.POST.address|default:'' }}"
-                    >
-
-                    <label for="area">Площадь, м² *</label>
-                    <input
-                        id="area"
-                        name="area"
-                        type="number"
-                        min="0.01"
-                        step="0.01"
-                        required
-                        value="{{ request.POST.area|default:'20' }}"
-                        placeholder="Например, 20"
-                    >
-
-                    <label for="comment">Комментарий</label>
                     <textarea
                         id="comment"
                         name="comment"
-                        rows="4"
-                        placeholder="Ваши пожелания"
-                    >{{ request.POST.comment|default:'' }}</textarea>
+                        rows="5"
+                        placeholder="Опишите ваши пожелания, цвет, фактуру и другие детали..."
+                    ></textarea>
 
                     <div class="order-actions">
                         <button class="btn" type="submit">
@@ -278,22 +238,26 @@
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            Написать в WhatsApp
+                            Написать в WhatsApp напрямую
                         </a>
                     </div>
+
+                    <p class="order-note">
+                        После нажатия на кнопку заказа откроется WhatsApp
+                        с подготовленным сообщением. Проверьте его и нажмите «Отправить».
+                    </p>
                 </form>
             </div>
 
         {% else %}
-            <div class="order-box">
-                <h3>Сначала выберите декор</h3>
+            <div class="order-box" style="text-align: center;">
+                <h2>Сначала выберите декор</h2>
 
-                <p>
-                    Перейдите в каталог и нажмите «Заказать»
-                    у нужного товара.
+                <p class="order-description" style="margin-bottom: 20px;">
+                    Перейдите в каталог и нажмите «Заказать» у нужного товара.
                 </p>
 
-                <a class="btn-small" href="/#products">
+                <a class="btn-small" href="/#products" style="display: inline-block; padding: 12px 24px; background: #d1c1a3; color: #191918; font-weight: 600; border-radius: 4px;">
                     Перейти в каталог
                 </a>
             </div>
@@ -303,27 +267,50 @@
 </main>
 
 <footer class="footer" id="footer">
-    <div class="container">
-        <p>ART DECOR — МАСТЕР-ХУДОЖНИК</p>
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <p style="color: var(--muted, #aaa9a5); font-size: 13px; margin: 0;">House Decor — МАСТЕР-ХУДОЖНИК</p>
+
         <a
             href="https://wa.me/996706010902"
             target="_blank"
             rel="noopener noreferrer"
+            style="color: #d1c1a3; font-size: 13px;"
         >
-            Связаться с нами в WhatsApp
+            Связаться с нами в WhatsApp ↗
         </a>
     </div>
 </footer>
 
 <script>
-    // Удаляем буквы и другие недопустимые символы сразу при вводе
-    const phoneInput = document.getElementById('phone');
+document.addEventListener("DOMContentLoaded", function () {
+    const orderForm = document.getElementById("orderForm");
 
-    phoneInput.addEventListener('input', function () {
-        this.value = this.value.replace(/[^0-9+() -]/g, '');
+    if (!orderForm) return;
+
+    orderForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const productHeading = document.querySelector(".order-box > h2");
+        const productName = productHeading ? productHeading.textContent.trim() : "Декоративное покрытие House Decor";
+        const commentField = document.getElementById("comment");
+        const detailedComment = commentField ? commentField.value.trim() : "";
+
+        let message = "Здравствуйте! Хочу оформить заказ House Decor.\n\n" +
+                      "Материал: " + productName;
+
+        if (detailedComment) {
+            message += "\nКомментарий: " + detailedComment;
+        }
+
+        const whatsappUrl = "https://wa.me/996706010902?text=" + encodeURIComponent(message);
+
+        // Безопасное открытие ссылки без блокировки браузерами
+        window.location.href = whatsappUrl;
     });
+});
 </script>
 
 </body>
 </html>
+
 

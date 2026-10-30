@@ -4,17 +4,16 @@ from .models import Product, Category, Review, Order
 
 # ---------------- PRODUCT ----------------
 
-
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
         'title',
         'price',
-        'application_price',
         'is_published',
         'category',
         'created_at',
     )
+
     list_filter = ('is_published', 'category')
     search_fields = ('title',)
     readonly_fields = ('slug', 'created_at', 'updated_at')
@@ -26,13 +25,11 @@ class ProductAdmin(admin.ModelAdmin):
         'short_desc',
         'description',
         'price',
-        'application_price',
         'is_published',
         'image',
         'created_at',
         'updated_at',
     )
-
 
 
 # ---------------- CATEGORY ----------------
@@ -57,6 +54,6 @@ class ReviewAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('name', 'phone', 'product', 'status', 'created_at')
-    list_filter = ('status',)
-    search_fields = ('name', 'phone', 'product__title')
+    list_display = ('material_price', 'created_at')
+    fields = ('material_price',)
+
